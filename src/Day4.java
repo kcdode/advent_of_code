@@ -25,30 +25,38 @@ public class Day4 {
 
     // checks if the md5 is valid
     private boolean isGood(HashMap<Character, Integer> inputs, String key) {
-        for (int i = 0; i < appearences.length-1; i++) {
-            for (int h = i; h < appearences.length; h++) {
-                if (appearences[i] < appearences[h]) return false;
-                //if (appearences[i] == appearences[h]) {
-                if (Character.valueOf(key.charAt(i)) > Character.valueOf(key.charAt(h))) return false;
-                //}
+        for (int i = 0; i < key.length()-1; i++) {
+            for (char letters: inputs.keySet()) {
+                if (  i == 0 && inputs.get(key.charAt(i)) < (inputs.get(letters)) ) return false;
+            }
+            for (int h = i+1; h < key.length(); h++) {
+                char c = key.charAt(i);
+                if (inputs.get(c) < inputs.get(key.charAt(h))) return false;
+                if (inputs.get(key.charAt(i)) == inputs.get(key.charAt(h))) {
+                    if  (Character.valueOf(key.charAt(i)) > Character.valueOf(key.charAt(h))) return false; }
             }
         }
         return true;
-//            if (appearences[i] == appearences[i+1]) {
-//                if (Character.valueOf(key.charAt(i)) > Character.valueOf(key.charAt(i++))) return false;
-//            }
     }
 
-    // tests how many apperances of each md5, then checks if it's a good one
+    // tests how many appearances of each md5, then checks if it's a good one
     private void iterate() {
         for (String key: inputs.keySet()) {
-            for( int i = 0; i < inputs.get(key).length(); i++){
+            for (int i = 0; i < inputs.get(key).length(); i++){
                 Character c = inputs.get(key).charAt(i);
                 if (Character.isDigit(c)) continue;
                 Integer val = frequency.get(c);
                 frequency.put(c, val + 1);
             }
-            isGood(frequency, key);
+            if (isGood(frequency, key)) {
+                String num = "";
+                for (char c: inputs.get(key).toCharArray()) {
+                    if (Character.isDigit(c))
+                        num+=c;
+                }
+                sum+= Integer.parseInt(num);
+            }
+            fill();
         }
 
     }
