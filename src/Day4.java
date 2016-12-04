@@ -24,19 +24,53 @@ public class Day4 {
     }
 
     // checks if the md5 is valid
-    private boolean isGood(HashMap<Character, Integer> inputs, String key) {
-        for (int i = 0; i < key.length()-1; i++) {
-            for (char letters: inputs.keySet()) {
-                if (  i == 0 && inputs.get(key.charAt(i)) < (inputs.get(letters)) ) return false;
-            }
-            for (int h = i+1; h < key.length(); h++) {
-                char c = key.charAt(i);
-                if (inputs.get(c) < inputs.get(key.charAt(h))) return false;
-                if (inputs.get(key.charAt(i)) == inputs.get(key.charAt(h))) {
-                    if  (Character.valueOf(key.charAt(i)) > Character.valueOf(key.charAt(h))) return false; }
-            }
+    private boolean isGood(HashMap<Character, Integer> frequency, String key) {
+        int max = 0;
+        ArrayList<Character> top5 = new ArrayList<>();
+        for (char c: frequency.keySet()) {
+            max = (frequency.get(c) > max) ? frequency.get(c) : max;
         }
-        return true;
+        for (char c: frequency.keySet()) {
+            if ((frequency.get(c) == max) && top5.size() < 5) top5.add(c);
+        }
+        Collections.sort(top5);
+        int h = max-1;
+        while (top5.size()<5) {
+            ArrayList<Character> temp = new ArrayList<>();
+            int len = top5.size();
+            for (char c: frequency.keySet()) {
+                if ((frequency.get(c) == h) && len < 5) {
+                    temp.add(c);
+                    len++;}
+            }
+            Collections.sort(temp);
+            top5.addAll(temp);
+            h--;
+        }
+        if (getStringRepresentation(top5).equals(key)) return true;
+        return false;
+
+//        for (int i = 0; i < key.length()-1; i++) {
+//            for (char letters: inputs.keySet()) {
+//                if (  i == 0 && (inputs.get(key.charAt(i)) < (inputs.get(letters))) ) return false;
+//            }
+//            for (int h = i+1; h < key.length(); h++) {
+//                char c = key.charAt(i);
+//                if (inputs.get(c) < inputs.get(key.charAt(h))) return false;
+//                if (inputs.get(c) == inputs.get(key.charAt(h))) {
+//                    if  (Character.valueOf(c) > Character.valueOf(key.charAt(h))) return false; }
+//            }
+//        }
+//        return true;
+    }
+    private String getStringRepresentation(ArrayList<Character> list)
+    {
+        StringBuilder builder = new StringBuilder(list.size());
+        for(Character ch: list)
+        {
+            builder.append(ch);
+        }
+        return builder.toString();
     }
 
     // tests how many appearances of each md5, then checks if it's a good one
