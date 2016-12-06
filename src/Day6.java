@@ -38,7 +38,7 @@ public class Day6 {
         int temp = 100;
         char tempc = '1';
         for (Character c : frequency.keySet()) {
-            if (frequency.get(c) < temp) { // or > for part 2
+            if (frequency.get(c) < temp) { // or > for part 1
                 tempc = c;
                 temp = frequency.get(c);
             }
