@@ -35,7 +35,7 @@ public class Day6 {
 
     }
     private void findMax() {
-        int temp = 100;
+        int temp = frequency.get('a');
         char tempc = '1';
         for (Character c : frequency.keySet()) {
             if (frequency.get(c) < temp) { // or > for part 1
