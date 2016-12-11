@@ -29,23 +29,27 @@ public class Day7 {
             StringBuilder noBrackets = new StringBuilder();
             StringBuilder brackets = new StringBuilder();
             boolean inBrackets = false;
-            for (char c : sc.nextLine().toCharArray()) {
-                if (c == '[') {
-                    noBrackets.append('1');
-                    inBrackets = true;
-                    continue;
-                }
-                if (c == ']') {
-                    brackets.append('1');
-                    inBrackets = false;
-                    continue;
-                }
-                if (!inBrackets) noBrackets.append(c);
-                if (inBrackets) brackets.append(c);
-            }
+            bracketOrNot(sc, noBrackets, brackets, inBrackets);
             ips.put(noBrackets.toString(), brackets.toString());
         }
         //System.out.println(ips);
+    }
+
+    private void bracketOrNot(Scanner sc, StringBuilder noBrackets, StringBuilder brackets, boolean inBrackets) {
+        for (char c : sc.nextLine().toCharArray()) {
+            if (c == '[') {
+                noBrackets.append('1');
+                inBrackets = true;
+                continue;
+            }
+            if (c == ']') {
+                brackets.append('1');
+                inBrackets = false;
+                continue;
+            }
+            if (!inBrackets) noBrackets.append(c);
+            if (inBrackets) brackets.append(c);
+        }
     }
 
     // part 2

@@ -11,7 +11,7 @@ public class Day5 {
     private Character[] passTwo = {'-', '-', '-', '-', '-', '-', '-', '-'};
     private Day5() throws NoSuchAlgorithmException {
         md = MessageDigest.getInstance("MD5");
-        //run();
+        run();
         runAgain();
     }
     public static void main(String[] args) throws NoSuchAlgorithmException {
@@ -35,7 +35,7 @@ public class Day5 {
             String toHash = input + i;
             String hash = MD5(toHash);
             if (hacking == 500) {
-                System.out.print("\r" + Arrays.toString(passTwo) + "  :  " + hash + " ::" + toHash);
+                System.out.print("\r" + Arrays.toString(passTwo) + "  :  " + hash + " :: " + toHash);
                 hacking = 0; }
             if (hash.startsWith("00000")) {
                 int posInPass = Integer.parseInt(hash.substring(5, 6), 16);
