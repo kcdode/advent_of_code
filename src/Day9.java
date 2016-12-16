@@ -17,10 +17,24 @@ public class Day9 {
         Scanner sc = new Scanner(file);
         StringBuilder x = new StringBuilder();
         x.append(sc.nextLine());
-        System.out.println(index);
-        increment(x);
-        findLength(finalString);
+        partTwo(x);
+        //System.out.println(index);
+        //increment(x);
+        //findLength(finalString);
 
+    }
+
+    private void partTwo(StringBuilder input) {
+        Pattern pattern = Pattern.compile("\\((\\d+)x\\d+\\)");
+        Pattern pattern1 = Pattern.compile(".+?(?=\\()");
+        while (input.length()>0) {
+            Matcher m = pattern.matcher(input);
+            Matcher matcher = pattern1.matcher(input);
+            m.find();
+            StringBuilder z = new StringBuilder();
+            z.append(input.toString().substring(m.group(0).length(), Integer.parseInt(m.group(1))));
+            System.out.println(z.toString());
+        }
     }
 
     private void increment(StringBuilder input) {
@@ -43,14 +57,16 @@ public class Day9 {
 
     private void findLength(StringBuilder finalString) {
         Pattern pattern = Pattern.compile("\\((\\d+)x\\d+\\)");
-        Pattern pattern1 = Pattern.compile(".+?(?=\\()");
         while (finalString.length() > 0) {
-//            if (Character.isAlphabetic(finalString.toString().charAt(0))) {
-//                Matcher m = pattern1.matcher(finalString.toString());
-//                num+= m.group(0).length();
-//                finalString.replace(0, m.group(0).length(), "");
-//                continue;
-//            }
+            if (Character.isAlphabetic(finalString.toString().charAt(0))) {
+                StringBuilder temp = new StringBuilder();
+                while (Character.isAlphabetic(finalString.charAt(0))) {
+                    temp.append(finalString.charAt(0));
+                    finalString.replace(0, 1, "");
+                }
+                num+= temp.length();
+                continue;
+            }
             Matcher m = pattern.matcher(finalString.toString());
             m.find();
             String[] x = m.group(0).replace("(", "").replace(")","").split("x");
